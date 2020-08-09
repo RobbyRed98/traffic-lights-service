@@ -1,4 +1,4 @@
-package com.traffic.lights.handler
+package com.traffic.lights.controller.handler
 
 object PrintHandler {
   def apply(): PrintHandler = new PrintHandler()

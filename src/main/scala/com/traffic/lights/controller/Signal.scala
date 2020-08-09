@@ -1,4 +1,4 @@
-package com.traffic.lights
+package com.traffic.lights.controller
 
 import com.traffic.lights.config.Config
 

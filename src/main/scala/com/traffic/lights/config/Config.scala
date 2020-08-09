@@ -1,5 +1,6 @@
 package com.traffic.lights.config
-import com.traffic.lights._
+
+import com.traffic.lights.controller._
 
 class Config(var upperIntervalBorder: Double, var lowerIntervalBorder: Double, var greenLightDuration: Double,
              var yellowLightDuration: Double, var yellowRedLightDuration: Double) {

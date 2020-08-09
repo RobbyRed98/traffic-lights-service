@@ -1,4 +1,4 @@
-package com.traffic.lights.handler
+package com.traffic.lights.controller.handler
 
 trait LightHandler {
   def greenOn(): Unit

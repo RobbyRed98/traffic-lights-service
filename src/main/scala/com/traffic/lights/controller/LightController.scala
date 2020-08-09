@@ -1,8 +1,8 @@
-package com.traffic.lights
+package com.traffic.lights.controller
 
 import akka.actor.{Actor, ActorLogging, Cancellable}
 import com.traffic.lights.config.Config
-import com.traffic.lights.handler.{LightHandler, PrintHandler}
+import com.traffic.lights.controller.handler.{LightHandler, PrintHandler}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration._
@@ -18,7 +18,7 @@ class LightController(val handler: LightHandler = PrintHandler()) extends Actor 
 
   override def receive: Receive = {
     case sig: Signal =>
-      if (sig.id > idThreshold)
+      if (sig.id >= idThreshold)
         updateLights(sig)
       else
         log.info("Ignored color update.")
@@ -40,20 +40,22 @@ class LightController(val handler: LightHandler = PrintHandler()) extends Actor 
     case Some(conf) =>
       log.info("A previous configuration has been found.")
       if (!newConfig.isSilentMergePossible(conf, state)) {
+        idThreshold = System.currentTimeMillis()
         log.info("A silent update is impossible.")
         log.info("Halting current cycle...")
         timeoutCancellable.cancel()
         config = Some(newConfig)
         log.info("Applied new config.")
-        idThreshold = System.currentTimeMillis()
         log.info("Restarting cycle with red light...")
         updateLights(Red())
       } else {
+        log.info("Applied new config.")
         config = Some(newConfig)
       }
     case _ =>
-      log.info("No previous configuration has been found. Applying the new config.")
+      log.info("No previous configuration has been found.")
       config = Some(newConfig)
+      log.info("Applied new config.")
   }
 
   private def updateLights(signal: Signal): Unit = {
