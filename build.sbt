@@ -16,3 +16,6 @@ libraryDependencies += "com.fasterxml.jackson.core" % "jackson-databind" % "2.11
 libraryDependencies += "com.fasterxml.jackson.module" %% "jackson-module-scala" % "2.11.2"
 // https://mvnrepository.com/artifact/com.typesafe.akka/akka-stream
 libraryDependencies += "com.typesafe.akka" %% "akka-stream" % "2.6.8"
+// https://mvnrepository.com/artifact/com.pi4j/pi4j-core
+libraryDependencies += "com.pi4j" % "pi4j-core" % "1.2"
+
