@@ -18,4 +18,6 @@ libraryDependencies += "com.fasterxml.jackson.module" %% "jackson-module-scala" 
 libraryDependencies += "com.typesafe.akka" %% "akka-stream" % "2.6.8"
 // https://mvnrepository.com/artifact/com.pi4j/pi4j-core
 libraryDependencies += "com.pi4j" % "pi4j-core" % "1.2"
+// akka http cors extension
+// libraryDependencies += "ch.megard" %% "akka-http-cors" % "1.1.0"
 

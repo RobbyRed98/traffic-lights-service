@@ -7,7 +7,7 @@ import akka.http.scaladsl.server.Directives.{complete, concat, get, path, pathSi
 import akka.http.scaladsl.server.Route
 import com.traffic.lights.config.{Config, ControllerConfigStore}
 import com.traffic.lights.controller.{LightController, Start, Stop, Update}
-import com.traffic.lights.service.util.JsonUtil
+import com.traffic.lights.service.util.{CORSHandler, JsonUtil}
 
 import scala.concurrent.{ExecutionContextExecutor, Future}
 import scala.language.postfixOps
@@ -19,32 +19,33 @@ class ControllerService(host: String = "localhost", port: Int = 8080) {
 
   var lightController: ActorRef = system.actorOf(Props(new LightController), "light-controller")
   var binding: Future[Http.ServerBinding] = _
+  var cors: CORSHandler = new CORSHandler() {}
 
   val route: Route = concat(
     get {
       concat(
         pathSingleSlash {
-          complete(StatusCodes.OK, HttpEntity(ContentTypes.`text/html(UTF-8)`,
+          cors.corsHandler(complete(StatusCodes.OK, HttpEntity(ContentTypes.`text/html(UTF-8)`,
             s"<html><body>The traffic lights controller service is available.</body></html>"
-          ))
+          )))
         },
         path("start") {
           lightController ! Start()
-          complete(StatusCodes.OK)
+          cors.corsHandler(complete(StatusCodes.OK))
         },
         path("stop") {
           lightController ! Stop()
-          complete(StatusCodes.OK)
+          cors.corsHandler(complete(StatusCodes.OK))
         },
         path("stop") {
           terminate()
-          complete(StatusCodes.OK)
+          cors.corsHandler(complete(StatusCodes.OK))
         },
         path("config") {
-          complete(StatusCodes.OK, HttpEntity(ContentTypes.`application/json`, JsonUtil.toJson(ControllerConfigStore.getConfig)))
+          cors.corsHandler(complete(StatusCodes.OK, HttpEntity(ContentTypes.`application/json`, JsonUtil.toJson(ControllerConfigStore.getConfig))))
         },
         path("running") {
-          complete(StatusCodes.OK, HttpEntity(ContentTypes.`application/json`, ControllerConfigStore.isRunning.toString))
+          cors.corsHandler(complete(StatusCodes.OK, HttpEntity(ContentTypes.`application/json`, ControllerConfigStore.isRunning.toString)))
         }
       )
     },
@@ -52,10 +53,11 @@ class ControllerService(host: String = "localhost", port: Int = 8080) {
       concat(
         path("config") {
           entity(as[String]) { configString =>
+            println(configString)
             val newConfig = JsonUtil.fromJson[Config](configString)
             ControllerConfigStore.updateConfig(newConfig)
             lightController ! Update(newConfig)
-            complete(StatusCodes.OK)
+            cors.corsHandler(complete(StatusCodes.OK))
           }
         }
       )
