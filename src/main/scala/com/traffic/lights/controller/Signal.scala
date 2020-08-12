@@ -15,3 +15,14 @@ trait Instruction
 case class Start() extends Instruction
 case class Update(config: Config) extends Instruction
 case class Stop() extends Instruction
+case class GetConfig() extends Instruction
+case class GetState() extends Instruction
+
+trait Reply
+case class NoChange() extends Reply
+case class Changed() extends Reply
+case class NoConfig() extends Reply
+
+trait HeartBeat
+case class AreYouAlive() extends HeartBeat
+case class IAmAlive() extends HeartBeat

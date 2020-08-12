@@ -11,7 +11,7 @@ import scala.util.Random
 
 class LightController(val handler: LightHandler = PrintHandler()) extends Actor with ActorLogging {
   private val random: Random = new Random(1000)
-  private var config: Option[Config] = _
+  private var config: Option[Config] = None
   private var timeoutCancellable: Cancellable = _
   private var idThreshold: Long = 0
   private var state: State = Paused()
@@ -23,17 +23,35 @@ class LightController(val handler: LightHandler = PrintHandler()) extends Actor 
       else
         log.info("Ignored color update.")
     case Start() =>
-      log.info("Starting light controller...")
-      updateLights(Red())
+      if (state.isInstanceOf[Signal]) {
+        log.info("Light controller runs already...")
+        sender() ! NoChange()
+      } else {
+        log.info("Starting light controller...")
+        sender() ! Changed()
+        updateLights(Red())
+      }
     case Update(newConfig: Config) =>
       log.info("Updating configuration...")
       updateConfig(newConfig)
     case Stop() =>
-      timeoutCancellable.cancel()
-      previousLightOff()
-      state = Paused()
-      handler.allOn()
-      log.info("Stopping light controller.")
+      if (state.isInstanceOf[Paused]) {
+        log.info("Light controller is already paused...")
+        sender() ! NoChange()
+      } else {
+        sender() ! Changed()
+        timeoutCancellable.cancel()
+        previousLightOff()
+        state = Paused()
+        handler.allOn()
+        log.info("Stopping light controller.")
+      }
+    case GetConfig() =>
+      sender() ! config.getOrElse(NoConfig())
+    case GetState() =>
+      if (state.isInstanceOf[Signal]) sender() ! true else sender() ! false
+    case AreYouAlive() =>
+      sender() ! IAmAlive()
   }
 
   private def updateConfig(newConfig: Config): Unit = config match {
