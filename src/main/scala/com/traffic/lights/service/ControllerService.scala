@@ -61,7 +61,8 @@ class ControllerService(host: String = "localhost", port: Int = 8080) {
         path("running") {
           Await.result(lightController ? GetState(), 5 seconds) match {
             case true => cors.corsHandler(complete(StatusCodes.OK))
-            case _ => cors.corsHandler(complete(StatusCodes.NoContent))
+            case false => cors.corsHandler(complete(StatusCodes.NoContent))
+            case _ => cors.corsHandler(complete(StatusCodes.InternalServerError))
           }
 
         },
