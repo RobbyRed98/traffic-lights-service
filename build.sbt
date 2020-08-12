@@ -1,4 +1,4 @@
-name := "traffic-lights"
+name := "traffic-lights-service"
 
 version := "0.1"
 
