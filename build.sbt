@@ -1,4 +1,6 @@
-name := "traffic-lights"
+
+
+name := "traffic-lights-service"
 
 version := "0.1"
 
@@ -10,14 +12,10 @@ libraryDependencies += "com.typesafe.akka" %% "akka-actor" % "2.6.8"
 libraryDependencies += "com.typesafe.akka" %% "akka-http" % "10.1.12"
 // https://mvnrepository.com/artifact/com.typesafe.akka/akka-http-core
 libraryDependencies += "com.typesafe.akka" %% "akka-http-core" % "10.1.12"
-// https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
-libraryDependencies += "com.fasterxml.jackson.core" % "jackson-databind" % "2.11.2"
-// https://mvnrepository.com/artifact/com.fasterxml.jackson.module/jackson-module-scala
-libraryDependencies += "com.fasterxml.jackson.module" %% "jackson-module-scala" % "2.11.2"
 // https://mvnrepository.com/artifact/com.typesafe.akka/akka-stream
 libraryDependencies += "com.typesafe.akka" %% "akka-stream" % "2.6.8"
 // https://mvnrepository.com/artifact/com.pi4j/pi4j-core
 libraryDependencies += "com.pi4j" % "pi4j-core" % "1.2"
-// akka http cors extension
-// libraryDependencies += "ch.megard" %% "akka-http-cors" % "1.1.0"
+// https://mvnrepository.com/artifact/com.google.code.gson/gson
+libraryDependencies += "com.google.code.gson" % "gson" % "2.8.6"
 

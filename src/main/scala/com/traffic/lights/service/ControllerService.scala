@@ -7,12 +7,13 @@ import akka.http.scaladsl.server.Directives.{complete, concat, get, path, pathSi
 import akka.http.scaladsl.server.Route
 import akka.pattern.ask
 import akka.util.Timeout
+import com.google.gson.Gson
 import com.traffic.lights.config.Config
-import com.traffic.lights.controller.{AreYouAlive, Changed, GetConfig, GetState, IAmAlive, LightController, NoChange, Start, Stop, Update}
-import com.traffic.lights.service.util.{CORSHandler, JsonUtil}
+import com.traffic.lights.controller._
+import com.traffic.lights.service.util.CORSHandler
 
-import scala.concurrent.{Await, ExecutionContextExecutor, Future}
 import scala.concurrent.duration._
+import scala.concurrent.{Await, ExecutionContextExecutor, Future}
 import scala.language.postfixOps
 
 
@@ -54,7 +55,7 @@ class ControllerService(host: String = "localhost", port: Int = 8080) {
         path("config") {
           Await.result(lightController ? GetConfig(), 5 seconds) match {
             case config: Config =>
-              cors.corsHandler(complete(StatusCodes.OK, HttpEntity(ContentTypes.`application/json`, JsonUtil.toJson(config))))
+              cors.corsHandler(complete(StatusCodes.OK, HttpEntity(ContentTypes.`application/json`, new Gson().toJson(config))))
             case _ => cors.corsHandler(complete(StatusCodes.NotFound))
           }
         },
@@ -79,7 +80,7 @@ class ControllerService(host: String = "localhost", port: Int = 8080) {
         path("config") {
           entity(as[String]) { configString =>
             println(configString)
-            val newConfig = JsonUtil.fromJson[Config](configString)
+            val newConfig = new Gson().fromJson(configString, classOf[Config])
             lightController ! Update(newConfig)
             cors.corsHandler(complete(StatusCodes.OK))
           }

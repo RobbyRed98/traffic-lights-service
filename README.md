@@ -1,4 +1,4 @@
-# traffic-light
+# traffic-lights-service
 Actor based service to control a traffic light.
 
 ## Basic API calls
