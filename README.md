@@ -1,7 +1,6 @@
 # traffic-lights-service
 Actor based service REST-service to control a real traffic light which is connected to a raspberry pi.
 
-
 ## Basic REST-API calls
 
 ### Start
