@@ -15,6 +15,7 @@ class LightController(val handler: LightHandler = PrintHandler()) extends Actor 
   private var timeoutCancellable: Cancellable = _
   private var idThreshold: Long = 0
   private var state: State = Paused()
+  log.info("Light controller started.")
 
   override def receive: Receive = {
     case sig: Signal =>

@@ -1,6 +1,28 @@
 # traffic-lights-service
 Actor based service REST-service to control a real traffic light which is connected to a raspberry pi.
 
+## Instructions
+
+### Run
+```bash
+$ sbt run
+```
+
+### Clean up
+```bash
+$ sbt clean
+```
+
+### Create a executable jar including dependencies
+```bash
+$ sbt assembly
+```
+
+### Run jar
+```bash
+$ java -jar path/to/traffic-lights-service-assembly-<x.y>.jar 
+```
+
 ## Basic REST-API calls
 
 ### Start
