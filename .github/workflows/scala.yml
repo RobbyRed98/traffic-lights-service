@@ -20,5 +20,5 @@ jobs:
     - name: Publish artifact
       uses: actions/upload-artifact@v2
       with:
-        name: app-bundle
+        name: artifact
         path: target/scala-2.13/*.jar
