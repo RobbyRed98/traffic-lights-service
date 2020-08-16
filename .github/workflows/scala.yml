@@ -15,9 +15,6 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 1.11
-    - name: Build a jar including all dependecies
-      run: |
-        mv target/scala-*/traffic-lights-service-assembly-*.jar target/
     - name: Build a debian
       run: sbt debian:packageBin
     - name: Build unversal packages (zip | tar.gz | tar.gz)
@@ -25,9 +22,9 @@ jobs:
         sbt universal:packageBin
         sbt universal:packageZipTarball
         sbt universal:packageXzTarball
-        mv traffic-lights-service-*.zip target/
-        mv traffic-lights-service-*.tgz target/
-        mv traffic-lights-service-*.txz target/
+        mv target/universal/traffic-lights-service-*.zip target/
+        mv target/universal/traffic-lights-service-*.tgz target/
+        mv target/universal/traffic-lights-service-*.txz target/
     - name: Publish artifact
       uses: actions/upload-artifact@v2
       with:
