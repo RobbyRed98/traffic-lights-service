@@ -29,4 +29,8 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: artifact
-        path: target/traffic-lights-service-*.(deb|zip|tgz|txz)
+        path: |
+        target/traffic-lights-service-*.deb
+        target/traffic-lights-service-*.zip
+        target/traffic-lights-service-*.tgz
+        target/traffic-lights-service-*.txz
