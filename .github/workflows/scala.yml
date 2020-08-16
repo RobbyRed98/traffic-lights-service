@@ -30,7 +30,7 @@ jobs:
       with:
         name: artifact
         path: |
-        target/traffic-lights-service-*.deb
-        target/traffic-lights-service-*.zip
-        target/traffic-lights-service-*.tgz
-        target/traffic-lights-service-*.txz
+          target/traffic-lights-service-*.deb
+          target/traffic-lights-service-*.zip
+          target/traffic-lights-service-*.tgz
+          target/traffic-lights-service-*.txz
