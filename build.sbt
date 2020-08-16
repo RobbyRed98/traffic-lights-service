@@ -4,6 +4,12 @@ name := "traffic-lights-service"
 
 version := "0.1"
 
+maintainer := "Robin Roth <robin.roth@web.de>"
+
+packageSummary := "A REST-service to control a traffic light."
+
+packageDescription := """A REST-service to control a real traffic light. The traffic light is connected to the GPIOs of a Raspberry Pi (Zero WH)."""
+
 scalaVersion := "2.13.3"
 
 // https://mvnrepository.com/artifact/com.typesafe.akka/akka-actor
@@ -18,4 +24,7 @@ libraryDependencies += "com.typesafe.akka" %% "akka-stream" % "2.6.8"
 libraryDependencies += "com.pi4j" % "pi4j-core" % "1.2"
 // https://mvnrepository.com/artifact/com.google.code.gson/gson
 libraryDependencies += "com.google.code.gson" % "gson" % "2.8.6"
+
+enablePlugins(JavaServerAppPackaging)
+enablePlugins(SystemdPlugin)
 
