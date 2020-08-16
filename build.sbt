@@ -7,7 +7,7 @@ version := "0.1"
 maintainer := "Robin Roth <robin.roth@web.de>"
 packageSummary := "A REST-service to control a traffic light."
 packageDescription := """A REST-service to control a real traffic light. The traffic light is connected to the GPIOs of a Raspberry Pi (Zero WH)."""
-debianPackageDependencies := Seq("java11-runtime-headless")
+debianPackageDependencies := Seq("openjdk-11-jre-headless")
 
 scalaVersion := "2.13.3"
 
